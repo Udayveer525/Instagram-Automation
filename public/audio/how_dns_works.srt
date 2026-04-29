@@ -1,0 +1,40 @@
+1
+00:00:00,050 --> 00:00:04,305
+Every time you type a URL, something incredible happens in milliseconds.
+
+2
+00:00:04,305 --> 00:00:08,888
+Your browser doesn't know where to find that website — so it asks a DNS resolver.
+
+3
+00:00:08,888 --> 00:00:10,983
+The resolver checks its cache first.
+
+4
+00:00:10,983 --> 00:00:13,379
+If it's a miss, it asks the root server.
+
+5
+00:00:13,379 --> 00:00:15,798
+The root server points to the TLD server.
+
+6
+00:00:15,798 --> 00:00:18,703
+The TLD server points to the authoritative server.
+
+7
+00:00:18,703 --> 00:00:22,013
+The authoritative server finally returns the IP address.
+
+8
+00:00:22,013 --> 00:00:24,976
+Four round trips, all under 20 milliseconds.
+
+9
+00:00:24,976 --> 00:00:28,495
+That's DNS — the phonebook the internet cannot live without.
+
+10
+00:00:28,495 --> 00:00:32,291
+Follow DevDecoded for one concept like this, every single day.
+

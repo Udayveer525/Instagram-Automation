@@ -14,6 +14,8 @@
       "title": "How DNS resolves a domain",
       "durationInSeconds": 10,
       "narration": "Your browser doesn't know where to find that website — so it asks a DNS resolver. The resolver checks its cache first. If it's a miss, it asks the root server. The root server points to the TLD server. The TLD server points to the authoritative server. The authoritative server finally returns the IP address — four round trips, all under 20 milliseconds.",
+      "arrowTimingMode": "relative",
+      "defaultArrowDurationFrames": 42,
       "nodes": [
         { "id": "browser",  "label": "Your Browser", "icon": "Globe",    "x": 540, "y": 650  },
         { "id": "resolver", "label": "DNS Resolver",  "icon": "Search",   "x": 540, "y": 920  },
@@ -22,12 +24,18 @@
         { "id": "auth",     "label": "Auth Server",   "icon": "Shield",   "x": 840, "y": 1200 }
       ],
       "arrows": [
-        { "from": "browser",  "to": "resolver", "label": "query",    "delay": 0   },
-        { "from": "resolver", "to": "root",     "label": "who has?", "delay": 30  },
-        { "from": "resolver", "to": "tld",      "label": ".com?",    "delay": 60  },
-        { "from": "resolver", "to": "auth",     "label": "find IP",  "delay": 90  },
-        { "from": "auth",     "to": "resolver", "label": "93.x.x.x", "delay": 120, "color": "teal" },
-        { "from": "resolver", "to": "browser",  "label": "here!",    "delay": 150, "color": "teal" }
+        { "from": "browser",  "to": "resolver", "label": "query",    "delay": 8 },
+
+        { "from": "resolver", "to": "root",     "label": "who has?", "delay": 22 },
+        { "from": "root",     "to": "resolver", "label": "root says .com", "delay": 16, "color": "teal" },
+
+        { "from": "resolver", "to": "tld",      "label": ".com?",    "delay": 22 },
+        { "from": "tld",      "to": "resolver", "label": "ask auth", "delay": 16, "color": "teal" },
+
+        { "from": "resolver", "to": "auth",     "label": "find IP",  "delay": 22 },
+        { "from": "auth",     "to": "resolver", "label": "93.x.x.x", "delay": 16, "color": "teal" },
+
+        { "from": "resolver", "to": "browser",  "label": "here!",    "delay": 20, "color": "teal" }
       ]
     },
     {

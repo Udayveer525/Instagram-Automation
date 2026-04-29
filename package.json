@@ -7,15 +7,18 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.451",
+    "@remotion/media-utils": "^4.0.451",
     "@remotion/zod-types": "4.0.451",
-    "react": "19.2.3",
+    "lucide": "^1.8.0",
+    "lucide-react": "^1.8.0",
+    "react": "^19.2.3",
     "react-dom": "19.2.3",
     "remotion": "4.0.451",
     "zod": "4.3.6"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.451",
-    "@types/react": "19.2.7",
+    "@types/react": "^19.2.7",
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
     "prettier": "3.8.1",
@@ -23,7 +26,9 @@
   },
   "scripts": {
     "dev": "remotion studio",
-    "build": "remotion bundle",
+    "start": "npx remotion studio",
+    "build": "npx remotion render DevDecodedReel out/reel.mp4 --props=props/dns_ready.json",
+    "render": "npx remotion render DevDecodedReel --props=props/dns_ready.json",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
   }

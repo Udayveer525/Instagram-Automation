@@ -1,0 +1,50 @@
+{
+  "topic": "How DNS Works",
+  "scenes": [
+    {
+      "type": "text_only",
+      "style": "hook",
+      "text": "Every URL you type triggers this in milliseconds.",
+      "subtext": "Most developers have no idea what actually happens.",
+      "durationInSeconds": 4,
+      "narration": "Every time you type a URL, something incredible happens in milliseconds."
+    },
+    {
+      "type": "network_diagram",
+      "title": "How DNS resolves a domain",
+      "durationInSeconds": 10,
+      "narration": "Your browser doesn't know where to find that website — so it asks a DNS resolver. The resolver checks its cache first. If it's a miss, it asks the root server. The root server points to the TLD server. The TLD server points to the authoritative server. The authoritative server finally returns the IP address — four round trips, all under 20 milliseconds.",
+      "nodes": [
+        { "id": "browser",  "label": "Your Browser", "icon": "Globe",    "x": 540, "y": 650  },
+        { "id": "resolver", "label": "DNS Resolver",  "icon": "Search",   "x": 540, "y": 920  },
+        { "id": "root",     "label": "Root Server",   "icon": "Server",   "x": 240, "y": 1200 },
+        { "id": "tld",      "label": "TLD Server",    "icon": "Database", "x": 540, "y": 1200 },
+        { "id": "auth",     "label": "Auth Server",   "icon": "Shield",   "x": 840, "y": 1200 }
+      ],
+      "arrows": [
+        { "from": "browser",  "to": "resolver", "label": "query",    "delay": 0   },
+        { "from": "resolver", "to": "root",     "label": "who has?", "delay": 30  },
+        { "from": "resolver", "to": "tld",      "label": ".com?",    "delay": 60  },
+        { "from": "resolver", "to": "auth",     "label": "find IP",  "delay": 90  },
+        { "from": "auth",     "to": "resolver", "label": "93.x.x.x", "delay": 120, "color": "teal" },
+        { "from": "resolver", "to": "browser",  "label": "here!",    "delay": 150, "color": "teal" }
+      ]
+    },
+    {
+      "type": "stat_reveal",
+      "stat": "20ms",
+      "label": "Average DNS resolution time",
+      "context": "Cached responses are often under 1ms. The internet is fast because resolvers remember.",
+      "durationInSeconds": 4,
+      "narration": "That's DNS — the phonebook the internet cannot live without. Cached responses are often under one millisecond."
+    },
+    {
+      "type": "text_only",
+      "style": "cta",
+      "text": "Follow for one concept like this, every day.",
+      "subtext": "Save this — your future self will thank you.",
+      "durationInSeconds": 4,
+      "narration": "Follow DevDecoded for one concept like this, every single day."
+    }
+  ]
+}

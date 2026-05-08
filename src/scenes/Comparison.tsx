@@ -40,7 +40,7 @@ export const Comparison: React.FC<{ scene: ComparisonScene }> = ({ scene }) => {
     <div style={{
       width: THEME.W,
       height: THEME.H,
-      background: THEME.bg,
+      background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
     }}>

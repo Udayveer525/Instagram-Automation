@@ -1,0 +1,98 @@
+{
+  "topic": "DNS Resolution Process",
+  "scenes": [
+    {
+      "type": "text_only",
+      "style": "hook",
+      "text": "Your browser’s secret handshake nobody sees",
+      "subtext": "How a tiny text query finds the whole internet",
+      "durationInSeconds": 4,
+      "narration": "Ever wonder how typing example.com magically loads a site? It’s not magic, it’s DNS whispering behind the scenes. Stick around, we’ll expose the hidden handshake."
+    },
+    {
+      "type": "network_diagram",
+      "title": "DNS Query Journey",
+      "durationInSeconds": 10,
+      "narration": "First, your laptop shouts a query to the recursive resolver. The resolver asks the root server, which points to the TLD server. That TLD server then points to the authoritative server, which finally drops the IP address back down. Each hop is a polite ask, not a brute‑force scan. And that’s why a single lookup takes milliseconds, not seconds.",
+      "nodes": [
+        {
+          "id": "c",
+          "label": "Client",
+          "icon": "Laptop",
+          "x": 300,
+          "y": 1400
+        },
+        {
+          "id": "r",
+          "label": "Resolver",
+          "icon": "Server",
+          "x": 300,
+          "y": 1100
+        },
+        {
+          "id": "root",
+          "label": "Root",
+          "icon": "Globe",
+          "x": 600,
+          "y": 800
+        },
+        {
+          "id": "tld",
+          "label": "TLD",
+          "icon": "Server",
+          "x": 600,
+          "y": 600
+        },
+        {
+          "id": "auth",
+          "label": "Auth",
+          "icon": "Server",
+          "x": 600,
+          "y": 400
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c",
+          "to": "r",
+          "label": "query",
+          "delay": 8
+        },
+        {
+          "from": "r",
+          "to": "root",
+          "label": "ask",
+          "delay": 28
+        },
+        {
+          "from": "root",
+          "to": "tld",
+          "label": "ref",
+          "delay": 58
+        },
+        {
+          "from": "tld",
+          "to": "auth",
+          "label": "ref",
+          "delay": 88
+        }
+      ]
+    },
+    {
+      "type": "stat_reveal",
+      "durationInSeconds": 5,
+      "stat": "97ms",
+      "label": "Average DNS lookup time",
+      "context": "Fast enough to feel instant, but every millisecond adds up across the web.",
+      "narration": "On average, a DNS lookup costs about 97 milliseconds. That’s a blink, but multiply it by billions of requests, and you see why DNS performance matters. Faster lookups = smoother browsing."
+    },
+    {
+      "type": "text_only",
+      "style": "cta",
+      "text": "Give DNS a round of applause",
+      "subtext": "Hit follow for more hidden tech",
+      "durationInSeconds": 4,
+      "narration": "Next time your page loads instantly, thank the silent DNS squad. Follow us for more behind‑the‑scenes tech tricks."
+    }
+  ]
+}

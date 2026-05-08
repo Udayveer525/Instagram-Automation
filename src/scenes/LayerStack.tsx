@@ -25,7 +25,7 @@ export const LayerStack: React.FC<{ scene: LayerStackScene }> = ({ scene }) => {
     <div style={{
       width: THEME.W,
       height: THEME.H,
-      background: THEME.bg,
+      background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
     }}>

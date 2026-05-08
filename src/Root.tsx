@@ -22,14 +22,28 @@ export const RemotionRoot: React.FC = () => {
       id="DevDecodedReel"
       component={Reel}
       schema={schema}
-      durationInFrames={defaultProps.scenes.reduce(
-        (sum, s) => sum + Math.round(s.durationInSeconds * 30),
-        0,
-      )}
       fps={30}
       width={THEME.W}
       height={THEME.H}
       defaultProps={defaultProps}
+      // 1. We deleted the hardcoded durationInFrames
+      // 2. We added calculateMetadata to read the LIVE props coming from n8n/Python
+      calculateMetadata={({ props }) => {
+        // Fallback to 30 frames if empty to prevent crashes
+        if (!props.scenes || props.scenes.length === 0) {
+          return { durationInFrames: 30 };
+        }
+
+        // Run your exact same math, but on the LIVE incoming props
+        const totalFrames = props.scenes.reduce(
+          (sum, s) => sum + Math.round((s.durationInSeconds || 0) * 30),
+          0,
+        );
+
+        return {
+          durationInFrames: Math.max(1, totalFrames),
+        };
+      }}
     />
   );
 };

@@ -51,7 +51,7 @@ export const CodeReveal: React.FC<{ scene: CodeRevealScene }> = ({ scene }) => {
     <div style={{
       width: THEME.W,
       height: THEME.H,
-      background: THEME.bg,
+      background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
     }}>

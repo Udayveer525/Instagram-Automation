@@ -8,7 +8,8 @@
       "subtext": "Most developers have no idea what actually happens.",
       "durationInSeconds": 5.11,
       "narration": "Every time you type a URL, something incredible happens in milliseconds.",
-      "audioFile": "audio/scene_0.mp3"
+      "audioFile": "audio/scene_0.mp3",
+      "subtitleFile": "audio/scene_0.srt"
     },
     {
       "type": "network_diagram",
@@ -108,7 +109,8 @@
           "color": "teal"
         }
       ],
-      "audioFile": "audio/scene_1.mp3"
+      "audioFile": "audio/scene_1.mp3",
+      "subtitleFile": "audio/scene_1.srt"
     },
     {
       "type": "stat_reveal",
@@ -117,7 +119,8 @@
       "context": "Cached responses are often under 1ms. The internet is fast because resolvers remember.",
       "durationInSeconds": 7.08,
       "narration": "That's DNS \u2014 the phonebook the internet cannot live without. Cached responses are often under one millisecond.",
-      "audioFile": "audio/scene_2.mp3"
+      "audioFile": "audio/scene_2.mp3",
+      "subtitleFile": "audio/scene_2.srt"
     },
     {
       "type": "text_only",
@@ -126,7 +129,8 @@
       "subtext": "Save this \u2014 your future self will thank you.",
       "durationInSeconds": 4.6,
       "narration": "Follow DevDecoded for one concept like this, every single day.",
-      "audioFile": "audio/scene_3.mp3"
+      "audioFile": "audio/scene_3.mp3",
+      "subtitleFile": "audio/scene_3.srt"
     }
   ]
 }

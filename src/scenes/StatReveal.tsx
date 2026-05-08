@@ -36,7 +36,7 @@ export const StatReveal: React.FC<{ scene: StatRevealScene }> = ({ scene }) => {
     <div style={{
       width: THEME.W,
       height: THEME.H,
-      background: THEME.bg,
+      background: 'transparent',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',

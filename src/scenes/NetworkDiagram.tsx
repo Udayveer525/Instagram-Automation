@@ -33,7 +33,7 @@ export const NetworkDiagram: React.FC<{ scene: NetworkDiagramScene }> = ({
       style={{
         width: THEME.W,
         height: THEME.H,
-        background: THEME.bg,
+        background: 'transparent',
         position: "relative",
         overflow: "hidden",
       }}

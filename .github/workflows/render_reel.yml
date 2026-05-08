@@ -1,0 +1,56 @@
+name: 🎬 Auto-Render DevDecoded Reel
+
+# This tells GitHub to listen for an external webhook event named "render_reel"
+on:
+  repository_dispatch:
+    types: [render_reel]
+
+jobs:
+  build-video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20 # Kills the server if it hangs, so you don't waste free minutes
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Install FFmpeg (For audio/video processing)
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: 📦 Install Python Dependencies
+        run: pip install edge-tts
+        
+      - name: 📦 Install NPM Dependencies
+        run: npm ci
+
+      - name: 🧠 Inject n8n AI Payload into Project
+        # This is pure magic. It takes the JSON from n8n and saves it as incoming.json
+        env:
+          PAYLOAD: ${{ toJson(github.event.client_payload) }}
+        run: |
+          mkdir -p props
+          echo "$PAYLOAD" > props/incoming.json
+
+      - name: 🎧 Run Python Voice & Subtitle Engine
+        run: python scripts/prepare_reel.py props/incoming.json
+
+      - name: 🎥 Render Remotion Video
+        run: npx remotion render DevDecodedReel out/latest_reel.mp4 --props=props/incoming_ready.json
+
+      - name: 💾 Save Final MP4 Artifact
+        # This takes the rendered video and makes it a downloadable file on the GitHub page
+        uses: actions/upload-artifact@v4
+        with:
+          name: DevDecoded_Reel
+          path: out/latest_reel.mp4

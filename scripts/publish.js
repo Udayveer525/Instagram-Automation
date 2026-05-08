@@ -48,16 +48,16 @@ async function publishReel() {
     // Generate a caption from the topic
     const caption = `🧠 ${scriptData.topic}\n\nFollow @Dev_De.coded for more tech deep-dives.\n\n#coding #softwareengineer #tech #developer #computerscience`;
 
-    const createContainerUrl = `https://graph.instagram.com/v25.0/${igAccountId}/media`;
+    const createContainerUrl = `https://graph.instagram.com/v25.0/${igAccountId}/media?access_token=${igToken}`;
+    
     const containerRes = await fetch(createContainerUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         media_type: 'REELS',
         video_url: videoUrl,
-        caption: caption,
-        access_token: igToken
-      })
+        caption: caption
+      }) // Removed access_token from body!
     });
     
     const containerData = await containerRes.json();
@@ -70,8 +70,9 @@ async function publishReel() {
     
     let status = 'IN_PROGRESS';
     while (status !== 'FINISHED') {
-      await sleep(5000); // Wait 5 seconds between checks
+      await sleep(5000); // Wait 5 seconds
       
+      // FIX: Changed to graph.instagram.com
       const statusUrl = `https://graph.instagram.com/v25.0/${creationId}?fields=status_code&access_token=${igToken}`;
       const statusRes = await fetch(statusUrl);
       const statusData = await statusRes.json();
@@ -83,14 +84,16 @@ async function publishReel() {
     }
 
     console.log('\n🚀 Phase 4: Publishing to the timeline!');
-    const publishUrl = `https://graph.instagram.com/v25.0/${igAccountId}/media_publish`;
+    
+    // FIX: Changed to graph.instagram.com AND added access_token to the URL
+    const publishUrl = `https://graph.instagram.com/v25.0/${igAccountId}/media_publish?access_token=${igToken}`;
+    
     const publishRes = await fetch(publishUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        creation_id: creationId,
-        access_token: igToken
-      })
+        creation_id: creationId
+      }) // Removed access_token from body!
     });
 
     const publishData = await publishRes.json();

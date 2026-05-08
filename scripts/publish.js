@@ -8,6 +8,9 @@ const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
 const igToken = process.env.IG_ACCESS_TOKEN;
 const igAccountId = process.env.IG_ACCOUNT_ID;
 
+// DEBUG LINE
+console.log(`\nDEBUG: Token exists? ${!!igToken} | Length: ${igToken ? igToken.length : 'UNDEFINED'}`);
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function sleep(ms) {

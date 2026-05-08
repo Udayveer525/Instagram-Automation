@@ -9,6 +9,7 @@
     "@remotion/cli": "4.0.451",
     "@remotion/media-utils": "^4.0.451",
     "@remotion/zod-types": "4.0.451",
+    "@supabase/supabase-js": "^2.105.3",
     "express": "^5.2.1",
     "lucide": "^1.8.0",
     "lucide-react": "^1.8.0",

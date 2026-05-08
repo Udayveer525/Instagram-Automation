@@ -48,7 +48,7 @@ async function publishReel() {
     // Generate a caption from the topic
     const caption = `🧠 ${scriptData.topic}\n\nFollow @Dev_De.coded for more tech deep-dives.\n\n#coding #softwareengineer #tech #developer #computerscience`;
 
-    const createContainerUrl = `https://graph.facebook.com/v19.0/${igAccountId}/media`;
+    const createContainerUrl = `https://graph.instagram.com/v25.0/${igAccountId}/media`;
     const containerRes = await fetch(createContainerUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -72,7 +72,7 @@ async function publishReel() {
     while (status !== 'FINISHED') {
       await sleep(5000); // Wait 5 seconds between checks
       
-      const statusUrl = `https://graph.facebook.com/v19.0/${creationId}?fields=status_code&access_token=${igToken}`;
+      const statusUrl = `https://graph.instagram.com/v25.0/${creationId}?fields=status_code&access_token=${igToken}`;
       const statusRes = await fetch(statusUrl);
       const statusData = await statusRes.json();
       
@@ -83,7 +83,7 @@ async function publishReel() {
     }
 
     console.log('\n🚀 Phase 4: Publishing to the timeline!');
-    const publishUrl = `https://graph.facebook.com/v19.0/${igAccountId}/media_publish`;
+    const publishUrl = `https://graph.instagram.com/v25.0/${igAccountId}/media_publish`;
     const publishRes = await fetch(publishUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

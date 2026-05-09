@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCurrentFrame, useVideoConfig, spring, interpolate } from 'remotion';
+import { useCurrentFrame, useVideoConfig, spring, interpolate, AbsoluteFill } from 'remotion';
 import { StatRevealScene } from '../types';
 import { THEME } from '../theme';
 import { BrandBar } from '../components/BrandBar';
@@ -9,7 +9,7 @@ export const StatReveal: React.FC<{ scene: StatRevealScene }> = ({ scene }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Parse the stat — supports "73%", "4.2B", "400ms", plain numbers
+  // Parse the stat
   const match = scene.stat.match(/^([\d.]+)(.*)$/);
   const numericPart = match ? parseFloat(match[1]) : 0;
   const suffix = match ? match[2] : '';
@@ -20,6 +20,20 @@ export const StatReveal: React.FC<{ scene: StatRevealScene }> = ({ scene }) => {
   const displayNum = isDecimal
     ? countedNum.toFixed(decimals)
     : countedNum.toString();
+
+  // --- THE FIX: DYNAMIC FONT SCALING ---
+  const totalChars = displayNum.length + suffix.length;
+  let statFontSize = 200;
+  let suffixFontSize = 90;
+
+  if (totalChars > 15) {
+    statFontSize = 110; // Shrink drastically for crazy floats like 0.30000000000000004
+    suffixFontSize = 60;
+  } else if (totalChars > 8) {
+    statFontSize = 150; // Medium shrink for billions/millions
+    suffixFontSize = 75;
+  }
+  // -------------------------------------
 
   const statAppear = spring({ frame: frame - 10, fps, config: { damping: 14, stiffness: 100 } });
   const labelAppear = spring({ frame: frame - 55, fps, config: { damping: 18, stiffness: 120 } });
@@ -33,15 +47,12 @@ export const StatReveal: React.FC<{ scene: StatRevealScene }> = ({ scene }) => {
   const contextY = interpolate(contextAppear, [0, 1], [20, 0]);
 
   return (
-    <div style={{
-      width: THEME.W,
-      height: THEME.H,
+    <AbsoluteFill style={{
       background: 'transparent',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      position: 'relative',
     }}>
       <BrandBar />
 
@@ -57,32 +68,40 @@ export const StatReveal: React.FC<{ scene: StatRevealScene }> = ({ scene }) => {
         pointerEvents: 'none',
       }} />
 
-      {/* Stat number */}
+      {/* Stat number Container */}
       <div style={{
         display: 'flex',
         alignItems: 'flex-start',
+        justifyContent: 'center',
+        flexWrap: 'wrap', // Allows the suffix to drop down if things get tight
         opacity: statOpacity,
         transform: `scale(${statScale})`,
         marginBottom: 32,
+        maxWidth: 900, // Forces constraints before it hits the edges of the 1080px canvas
+        padding: '0 40px',
       }}>
         <span style={{
           fontFamily: THEME.fontSans,
-          fontSize: 200,
+          fontSize: statFontSize,
           fontWeight: 900,
           color: THEME.coral,
           lineHeight: 1,
           letterSpacing: '-0.04em',
+          wordBreak: 'break-all', // THE MAGIC FIX: Slices long unbroken strings
+          textAlign: 'center',
         }}>
           {displayNum}
         </span>
+        
         {suffix && (
           <span style={{
             fontFamily: THEME.fontSans,
-            fontSize: 90,
+            fontSize: suffixFontSize,
             fontWeight: 800,
             color: THEME.coral,
-            marginTop: 24,
+            marginTop: statFontSize * 0.12, // Keeps suffix aligned to the top relatively
             opacity: 0.85,
+            marginLeft: 8,
           }}>
             {suffix}
           </span>
@@ -131,6 +150,6 @@ export const StatReveal: React.FC<{ scene: StatRevealScene }> = ({ scene }) => {
       }}>
         {scene.context}
       </div>
-    </div>
+    </AbsoluteFill>
   );
 };

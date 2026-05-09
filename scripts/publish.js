@@ -46,7 +46,7 @@ async function publishReel() {
     console.log('\n🚀 Phase 2: Telling Instagram to download the video...');
     
     // Generate a caption from the topic
-    const caption = `🧠 ${scriptData.topic}\n\nFollow @Dev_De.coded for more tech deep-dives.\n\n#coding #softwareengineer #tech #developer #computerscience`;
+    const caption = scriptData.caption || `🧠 ${scriptData.topic}\n\nFollow @Dev_De.coded for more tech deep-dives.\n\n#coding #softwareengineer #tech`;
 
     const createContainerUrl = `https://graph.instagram.com/v25.0/${igAccountId}/media?access_token=${igToken}`;
     

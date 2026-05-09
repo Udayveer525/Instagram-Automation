@@ -50,7 +50,7 @@ export const Captions: React.FC<CaptionsProps> = ({ srtFile }) => {
 
   return (
     // Pushed down to bottom: 120px, and brought forward with zIndex
-    <AbsoluteFill style={{ justifyContent: 'flex-end', alignItems: 'center', paddingBottom: '120px', pointerEvents: 'none', zIndex: 100 }}>
+    <AbsoluteFill style={{ justifyContent: 'flex-end', alignItems: 'center', paddingBottom: '450px', pointerEvents: 'none', zIndex: 100 }}>
       <div
         style={{
           display: 'flex',

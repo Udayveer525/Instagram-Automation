@@ -6,7 +6,6 @@ export interface TextOnlyScene {
   durationInSeconds: number;
   narration?: string;
   audioFile?: string;
-  subtitleFile?: string;
 }
 
 export interface NetworkNode {
@@ -34,7 +33,6 @@ export interface NetworkDiagramScene {
   durationInSeconds: number;
   narration?: string;
   audioFile?: string;
-  subtitleFile?: string;
   arrowTimingMode?: 'absolute' | 'relative';
   defaultArrowDurationFrames?: number;
 }
@@ -53,7 +51,6 @@ export interface LayerStackScene {
   durationInSeconds: number;
   narration?: string;
   audioFile?: string;
-  subtitleFile?: string;
 }
 
 export interface CodeLine {
@@ -69,7 +66,6 @@ export interface CodeRevealScene {
   durationInSeconds: number;
   narration?: string;
   audioFile?: string;
-  subtitleFile?: string;
 }
 
 export interface StatRevealScene {
@@ -80,7 +76,6 @@ export interface StatRevealScene {
   durationInSeconds: number;
   narration?: string;
   audioFile?: string;
-  subtitleFile?: string;
 }
 
 export interface ComparisonColumn {
@@ -97,7 +92,6 @@ export interface ComparisonScene {
   durationInSeconds: number;
   narration?: string;
   audioFile?: string;
-  subtitleFile?: string;
 }
 
 export type Scene =

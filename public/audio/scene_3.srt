@@ -1,0 +1,8 @@
+1
+00:00:00,050 --> 00:00:04,062
+Next time your page loads instantly, thank the silent DNS squad.
+
+2
+00:00:04,062 --> 00:00:06,643
+Follow us for more behind‑the‑scenes tech tricks.
+

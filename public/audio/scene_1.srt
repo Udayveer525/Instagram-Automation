@@ -1,0 +1,20 @@
+1
+00:00:00,050 --> 00:00:03,645
+First, your laptop shouts a query to the recursive resolver.
+
+2
+00:00:03,645 --> 00:00:07,476
+The resolver asks the root server, which points to the TLD server.
+
+3
+00:00:07,476 --> 00:00:13,449
+That TLD server then points to the authoritative server, which finally drops the IP address back down.
+
+4
+00:00:13,449 --> 00:00:16,527
+Each hop is a polite ask, not a brute‑force scan.
+
+5
+00:00:16,527 --> 00:00:20,127
+And that’s why a single lookup takes milliseconds, not seconds.
+

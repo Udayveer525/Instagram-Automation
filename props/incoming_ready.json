@@ -6,7 +6,7 @@
       "style": "hook",
       "text": "Your browser\u2019s secret handshake nobody sees",
       "subtext": "How a tiny text query finds the whole internet",
-      "durationInSeconds": 5.53,
+      "durationInSeconds": 10.49,
       "narration": "Ever wonder how typing example.com magically loads a site? It\u2019s not magic, it\u2019s DNS whispering behind the scenes. Stick around, we\u2019ll expose the hidden handshake.",
       "audioFile": "audio/scene_0.mp3",
       "subtitleFile": "audio/scene_0.srt"
@@ -14,7 +14,7 @@
     {
       "type": "network_diagram",
       "title": "DNS Query Journey",
-      "durationInSeconds": 9.76,
+      "durationInSeconds": 20.93,
       "narration": "First, your laptop shouts a query to the recursive resolver. The resolver asks the root server, which points to the TLD server. That TLD server then points to the authoritative server, which finally drops the IP address back down. Each hop is a polite ask, not a brute\u2011force scan. And that\u2019s why a single lookup takes milliseconds, not seconds.",
       "nodes": [
         {
@@ -84,7 +84,7 @@
     },
     {
       "type": "stat_reveal",
-      "durationInSeconds": 7.07,
+      "durationInSeconds": 13.32,
       "stat": "97ms",
       "label": "Average DNS lookup time",
       "context": "Fast enough to feel instant, but every millisecond adds up across the web.",
@@ -97,7 +97,7 @@
       "style": "cta",
       "text": "Give DNS a round of applause",
       "subtext": "Hit follow for more hidden tech",
-      "durationInSeconds": 4.52,
+      "durationInSeconds": 7.44,
       "narration": "Next time your page loads instantly, thank the silent DNS squad. Follow us for more behind\u2011the\u2011scenes tech tricks.",
       "audioFile": "audio/scene_3.mp3",
       "subtitleFile": "audio/scene_3.srt"

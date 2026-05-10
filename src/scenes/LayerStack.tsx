@@ -21,9 +21,6 @@ export const LayerStack: React.FC<{ scene: LayerStackScene }> = ({ scene }) => {
   const totalStackHeight = totalLayers * (layerHeight + layerGap) - layerGap;
   const stackTop = (THEME.H - totalStackHeight) / 2 + 60;
 
-  // All layers in by this frame
-  const allLayersInBy = TITLE_FRAMES + totalLayers * FRAMES_PER_LAYER + 10;
-
   return (
     <div style={{
       width: THEME.W,
@@ -76,20 +73,13 @@ export const LayerStack: React.FC<{ scene: LayerStackScene }> = ({ scene }) => {
 
         const layerY = stackTop + i * (layerHeight + layerGap);
 
+        // Label appears after layer slides in
         const labelOpacity = interpolate(
           frame,
           [layerStart + 8, layerStart + 20],
           [0, 1],
           { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
         );
-
-        // MICRO-ANIMATION: highlighted layer breathes (subtle scale + glow pulse)
-        const breatheScale = isHighlighted && frame > allLayersInBy
-          ? 1 + 0.006 * Math.sin((frame - allLayersInBy) * 0.08)
-          : 1;
-        const glowOpacity = isHighlighted && frame > allLayersInBy
-          ? 0.18 + 0.07 * Math.sin((frame - allLayersInBy) * 0.08)
-          : 0.13;
 
         return (
           <div
@@ -101,15 +91,17 @@ export const LayerStack: React.FC<{ scene: LayerStackScene }> = ({ scene }) => {
               width: stackWidth,
               height: layerHeight,
               opacity,
-              transform: `translateX(${translateX}px) scaleX(${breatheScale})`,
-              transformOrigin: 'center center',
+              transform: `translateX(${translateX}px)`,
             }}
           >
+            {/* Layer bar */}
             <div style={{
               width: '100%',
               height: '100%',
               borderRadius: 16,
-              background: isHighlighted ? `${accent}${Math.round(glowOpacity * 255).toString(16).padStart(2,'0')}` : THEME.surfaceAlt,
+              background: isHighlighted
+                ? `${accent}22`
+                : THEME.surfaceAlt,
               border: `1.5px solid ${isHighlighted ? accent : THEME.border}`,
               display: 'flex',
               alignItems: 'center',
@@ -118,15 +110,13 @@ export const LayerStack: React.FC<{ scene: LayerStackScene }> = ({ scene }) => {
               gap: 24,
               position: 'relative',
               overflow: 'hidden',
-              // MICRO-ANIMATION: box shadow pulse on highlighted layer
-              boxShadow: isHighlighted && frame > allLayersInBy
-                ? `0 0 ${20 + 10 * Math.sin((frame - allLayersInBy) * 0.08)}px ${accent}44`
-                : 'none',
             }}>
               {/* Left accent stripe */}
               <div style={{
                 position: 'absolute',
-                left: 0, top: 0, bottom: 0,
+                left: 0,
+                top: 0,
+                bottom: 0,
                 width: 5,
                 borderRadius: '16px 0 0 16px',
                 background: accent,
@@ -167,6 +157,7 @@ export const LayerStack: React.FC<{ scene: LayerStackScene }> = ({ scene }) => {
                 )}
               </div>
 
+              {/* Highlighted badge */}
               {isHighlighted && (
                 <div style={{
                   opacity: labelOpacity,

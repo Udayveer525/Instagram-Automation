@@ -55,7 +55,12 @@ async def generate_scene_audio(
                 json.dump(word_timings, wf, ensure_ascii=False)
 
             parsed_duration = get_mp3_duration(output_path)
-            return max(parsed_duration, round(max_boundary_end_seconds, 3))
+            # Prefer WordBoundary timing (speech engine's own timeline) when available.
+            # It's always more accurate than frame-counting the MP3.
+            # Add 0.3s to boundary timing to capture trailing audio after last word.
+            if max_boundary_end_seconds > 0:
+                return round(max_boundary_end_seconds + 0.3, 3)
+            return parsed_duration
 
         except Exception as e:
             print(
@@ -174,7 +179,7 @@ def main():
         )
 
         # Add tail padding so scene doesn't cut the end of narration.
-        padded_duration = round(actual_duration + 0.8, 2)
+        padded_duration = round(actual_duration + 1.5, 2)
 
         scenes[i] = {
             **scene,

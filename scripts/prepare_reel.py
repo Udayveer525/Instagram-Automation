@@ -16,27 +16,43 @@ async def generate_scene_audio(
     text: str, output_path: str, srt_path: str, max_retries=3
 ) -> float:
     """
-    Generate MP3 and SRT for a single scene narration, with robust retry logic.
+    Generate MP3, SRT, and word-level timing JSON for a single scene narration.
+    The .words.json file gives Captions.tsx exact per-word timestamps.
     """
     for attempt in range(max_retries):
         try:
             communicate = edge_tts.Communicate(text=text, voice=VOICE, rate="+8%")
             submaker = edge_tts.SubMaker()
+            word_timings = []  # [{word, start, end}] in seconds
 
             max_boundary_end_seconds = 0.0
             with open(output_path, "wb") as f:
                 async for chunk in communicate.stream():
                     if chunk["type"] == "audio":
                         f.write(chunk["data"])
-                    elif chunk["type"] in ("WordBoundary", "SentenceBoundary"):
+                    elif chunk["type"] == "WordBoundary":
                         submaker.feed(chunk)
-                        end_seconds = (chunk["offset"] + chunk["duration"]) / 10_000_000
-                        if end_seconds > max_boundary_end_seconds:
-                            max_boundary_end_seconds = end_seconds
+                        # Edge TTS gives offsets in 100-nanosecond ticks
+                        start_s = round(chunk["offset"] / 10_000_000, 4)
+                        end_s   = round((chunk["offset"] + chunk["duration"]) / 10_000_000, 4)
+                        word_timings.append({
+                            "word":  chunk["text"],
+                            "start": start_s,
+                            "end":   end_s,
+                        })
+                        if end_s > max_boundary_end_seconds:
+                            max_boundary_end_seconds = end_s
+                    elif chunk["type"] == "SentenceBoundary":
+                        submaker.feed(chunk)
 
-            # Save the subtitles
+            # Save SRT
             with open(srt_path, "w", encoding="utf-8") as sub_file:
                 sub_file.write(submaker.get_srt())
+
+            # Save word timings JSON alongside the SRT
+            words_path = srt_path.replace(".srt", ".words.json")
+            with open(words_path, "w", encoding="utf-8") as wf:
+                json.dump(word_timings, wf, ensure_ascii=False)
 
             parsed_duration = get_mp3_duration(output_path)
             return max(parsed_duration, round(max_boundary_end_seconds, 3))
@@ -47,9 +63,8 @@ async def generate_scene_audio(
             )
             if attempt == max_retries - 1:
                 print("      [!] Out of retries. Crashing pipeline.")
-                raise  # Out of retries, throw the error to crash the script
+                raise
 
-            # Wait 2 seconds and try again
             await asyncio.sleep(2)
 
 

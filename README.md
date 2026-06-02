@@ -258,5 +258,3 @@ This repository is currently marked as unlicensed in `package.json`.
 The repository includes `props/dns_ready.json` as a complete example. It demonstrates a reel about how DNS works, with a hook, a network diagram, a stat reveal, and a CTA scene.
 
 ---
-
-If you want this, the next useful step is usually to adapt the README to your preferred audience: developer-focused, automation-focused, or Instagram-content-focused.
